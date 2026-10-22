@@ -16,11 +16,12 @@ use Illuminate\Http\Response;
 class TestCaseController extends Controller
 {
     /**
-     * テストケース一覧（priority・is_active で絞り込み可能）
+     * テストケース一覧（section_id・priority・is_active で絞り込み可能）
      */
     public function index(Request $request, Project $project): AnonymousResourceCollection
     {
         $testCases = $project->testCases()
+            ->when($request->filled('section_id'), fn ($q) => $q->where('section_id', $request->integer('section_id')))
             ->when($request->filled('priority'), fn ($q) => $q->where('priority', $request->string('priority')))
             ->when($request->has('is_active'), fn ($q) => $q->where('is_active', $request->boolean('is_active')))
             ->orderBy('id')

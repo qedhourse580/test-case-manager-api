@@ -49,4 +49,12 @@ class TestRunController extends Controller
     {
         return response()->json(['data' => $this->service->summarize($testRun)]);
     }
+
+    /**
+     * シート・大項目・中項目・小項目ごとの集計
+     */
+    public function sectionsSummary(TestRun $testRun): JsonResponse
+    {
+        return response()->json(['data' => $this->service->summarizeBySection($testRun)]);
+    }
 }

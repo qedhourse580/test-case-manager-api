@@ -7,23 +7,33 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RecordTestResultRequest;
 use App\Http\Resources\TestResultResource;
 use App\Models\TestResult;
+use App\Services\TestResultService;
 
 class TestResultController extends Controller
 {
+    public function __construct(private readonly TestResultService $service) {}
+
     /**
-     * テスト結果を記録する
+     * テスト結果を記録する（履歴にも1行追加される）
      */
     public function update(RecordTestResultRequest $request, TestResult $testResult): TestResultResource
     {
-        $status = ResultStatus::from($request->validated('status'));
+        $this->service->record(
+            $testResult,
+            ResultStatus::from($request->validated('status')),
+            $request->validated('note'),
+        );
 
-        $testResult->update([
-            'status' => $status,
-            'note' => $request->validated('note'),
-            // 未実施に戻した場合は実施日時もクリアする
-            'executed_at' => $status->isExecuted() ? now() : null,
-        ]);
+        return TestResultResource::make($testResult->load('testCase')->loadCount('histories'));
+    }
 
-        return TestResultResource::make($testResult->load('testCase'));
+    /**
+     * 記録の履歴（古い順）
+     */
+    public function history(TestResult $testResult): TestResultResource
+    {
+        return TestResultResource::make(
+            $testResult->load(['testCase', 'histories'])->loadCount('histories'),
+        );
     }
 }

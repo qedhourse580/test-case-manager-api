@@ -13,6 +13,7 @@ class TestCaseResource extends JsonResource
         return [
             'id' => $this->id,
             'project_id' => $this->project_id,
+            'section_id' => $this->section_id,
             'title' => $this->title,
             'preconditions' => $this->preconditions,
             'steps' => $this->steps,

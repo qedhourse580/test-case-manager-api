@@ -36,6 +36,14 @@ class TestResult extends Model
         return $this->belongsTo(TestCase::class);
     }
 
+    /**
+     * 記録の履歴（古い順）
+     */
+    public function histories(): HasMany
+    {
+        return $this->hasMany(TestResultHistory::class)->orderBy('id');
+    }
+
     public function defects(): HasMany
     {
         return $this->hasMany(Defect::class);

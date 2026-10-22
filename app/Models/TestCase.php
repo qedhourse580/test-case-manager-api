@@ -14,6 +14,7 @@ class TestCase extends Model
     use HasFactory;
 
     protected $fillable = [
+        'section_id',
         'title',
         'preconditions',
         'steps',
@@ -38,6 +39,11 @@ class TestCase extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function section(): BelongsTo
+    {
+        return $this->belongsTo(Section::class);
     }
 
     public function results(): HasMany

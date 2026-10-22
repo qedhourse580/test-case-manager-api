@@ -18,6 +18,8 @@ class TestResultResource extends JsonResource
             'status' => $this->status->value,
             'note' => $this->note,
             'executed_at' => $this->executed_at?->toIso8601String(),
+            'attempts' => $this->whenCounted('histories'),
+            'history' => TestResultHistoryResource::collection($this->whenLoaded('histories')),
             'updated_at' => $this->updated_at?->toIso8601String(),
         ];
     }

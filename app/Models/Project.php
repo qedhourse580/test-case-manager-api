@@ -17,6 +17,11 @@ class Project extends Model
         return $this->hasMany(TestCase::class);
     }
 
+    public function sections(): HasMany
+    {
+        return $this->hasMany(Section::class);
+    }
+
     public function testRuns(): HasMany
     {
         return $this->hasMany(TestRun::class);
