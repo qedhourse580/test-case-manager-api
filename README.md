@@ -36,10 +36,10 @@ QAの現場でExcelのテスト項目書と進捗表で行ってきた管理（�
 | 状態遷移の制御 | 不具合ステータスは、許可された遷移以外を 422 で拒否 |
 
 ## 技術スタック
-- PHP 8.3 / 8.4、Laravel 13
+- PHP 8.3 / 8.4 / 8.5、Laravel 13
 - SQLite（開発・テスト）／ MySQL にも対応可能
 - PHPUnit 12（Unit / Feature テスト 73件）
-- GitHub Actions（PHP 8.3・8.4 でテストを自動実行）
+- GitHub Actions（PHP 8.3・8.4・8.5 でテストを自動実行）
 
 ## 設計のポイント
 
